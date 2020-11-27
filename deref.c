@@ -18,5 +18,5 @@ int main(int argc, char* argv[]){
 	
 	*p = 5;
 	printf("var is set through p as %d\n", var);
-	return 0;
+	return 0; // Note: cannot return &p as it is a stack address, not a malloced heap address
 }
