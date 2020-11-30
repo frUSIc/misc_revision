@@ -61,6 +61,59 @@ for (c = s; *c != '\0'; c++) {
 ### Padding
 - Structs are padded for alignment, re-order fields to minimise wasted space
 
+### Arrow Functions JavaScript
+- Reduces single line function size
+```
+function (a){
+  return a + 100;
+}
+
+a => a + 100;
+```
+### Format Specifiers
+- d = int
+- u = unsigned int
+- f = float AND double
+- c = unsigned char
+- s = string array
+- p = pointer
+- x = unsigned hexadecimal
+
+### Python venv Quickstart
+```
+mkdir env
+cd env
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+deactivate
+```
+
+### Pipes and Redirects
+Pipe: Used to pass output to another program/utility
+Redirect: Used to pass output to a file/stream
+
+E.g. run program and redirect its output into file
+```
+prog > file
+```
+E.g. run program1 and use its output as the input for program2
+```
+prog1 | prog2
+```
+
+### Conditional/Ternary Operator
+If the expression evalues to true, var = trueOpt, otherwise var = falseOpt
+```
+var = expression ? trueOpt : falseOpt
+```
+
+### Git essentials
+```
+git checkout -b [newbranch]
+git push -u origin [newbranch]
+```
+
 ## Definitions
 ---------------------------------------------------------
 
@@ -124,6 +177,10 @@ e.g. 150.75 = 1001 0110.11, where 0.1 == 1/2, 0.01 == 1/4, etc.
 4. Determine the fraction, 1.001011011 -> 0 0101 1011
 Float is 0 100000110 001011011|000000000000000
 
+### Buffered/Unbuffered I/O
+- Buffered I/O: Data is stored in cache and gathered, then written in bulk when there is enough data
+- Unbuffered I/O: Data is written to disk as soon as requested
+
 ## Data Structures
 ---------------------------------------------------------
 
@@ -138,8 +195,27 @@ Note: Opposite of abstract is concrete.
 - Stack: Last-in-first-out list. Uses push() and pop()
 - Queue: First-in-first-out list. Uses enqueue() and dequeue(). Circular queue is a variation
 - Priority queue: Highest-priority-out list
+- Sets
+- Lists
+- Trees
+- Graphs
+- Dictionaries
+
+## Algorithms
+---------------------------------------------------------
+
+### Common Running times in order
+- Constant
+- Logarithmic
+- Linear
+- N log N
+- Quadratic
+- Cubic
+- Exponential
+[Big O Cheat Sheet](https://www.bigocheatsheet.com/)
 
 ## Code directory
 ---------------------------------------------------------
 - deref.c: Examples of using \* and &
 - array.c: Addresses of different array creation
+- threads.c: Creates 5 threads, each printing their own id
