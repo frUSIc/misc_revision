@@ -115,7 +115,8 @@ git push -u origin [newbranch]
 git remote set-url origin [neworigin]
 ```
 
-## Definitions
+---------------------------------------------------------
+Definitions
 ---------------------------------------------------------
 
 ### Strong/Weak typed
@@ -201,7 +202,8 @@ PUT /api/resources/text1
 DELETE /api/resources/text2
 ```
 
-## Data Structures
+---------------------------------------------------------
+Data Structures
 ---------------------------------------------------------
 
 ### Data types
@@ -251,6 +253,7 @@ Note: Opposite of abstract is concrete.
 - Worst case occurs when past its load balance. So full that collisions constantly occur, making it slightly worse than a basic array
 
 
+---------------------------------------------------------
 Algorithms
 ---------------------------------------------------------
 
