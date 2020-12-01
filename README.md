@@ -231,6 +231,7 @@ Note: Opposite of abstract is concrete.
 
 ### Common Data Structure Operations
 |Data Structure|Time Complexity Access-Search-Insert-Delete (Average/Worst)|Space Complexity (Worst)|
+|---|---|---|
 |Array|1-n-n-n/Same|n|
 |Hash Table|1-1-1-1/n-n-n-n|n|
 |Linked List|n-n-1-1/Same|n|
@@ -249,7 +250,8 @@ Note: Opposite of abstract is concrete.
 - This hash allows significantly faster search, insert, delete compared to a basic array
 - Worst case occurs when past its load balance. So full that collisions constantly occur, making it slightly worse than a basic array
 
-## Algorithms
+
+Algorithms
 ---------------------------------------------------------
 
 ### Common Running times in order
@@ -264,6 +266,7 @@ Note: Opposite of abstract is concrete.
 
 ### Common Array Sorting Algorithms
 |Algorithm|Time Complexity (Best/Average/Worst)|Space Complexity (Worst)|
+|---|---|---|
 |Mergesort|nlogn-nlogn-nlogn|n|
 |Quicksort|nlogn-nlogn-n^2|log|
 |Heapsort|nlogn-nlogn-nlogn|1|
