@@ -112,6 +112,7 @@ var = expression ? trueOpt : falseOpt
 ```
 git checkout -b [newbranch]
 git push -u origin [newbranch]
+git remote set-url origin [neworigin]
 ```
 
 ## Definitions
@@ -181,6 +182,25 @@ Float is 0 100000110 001011011|000000000000000
 - Buffered I/O: Data is stored in cache and gathered, then written in bulk when there is enough data
 - Unbuffered I/O: Data is written to disk as soon as requested
 
+### CRUD Operations
+- Stands for Create, Read, Update, Delete
+- The four functions necessary for persistent databases
+- Matches up well with following HTTP methods: POST, GET, PUT/PATCH, DELETE 
+
+### REST (Representative State Transfer)
+- A RESTful API is a web app that conforms to principles of REST
+- Stateless, all required info is in the HTTP request
+- API is called by issuing standard POST, GET, PUT and DELETE
+- A web app's RESTful service is exposed through the [url]/api path by convention
+- The CRUD operations are performed via HTTP requests to different subpaths of [url]/api
+- Is an alternative to SOAP, CORBA, RMI, etc.
+```
+POST /api/resources
+GET /api/resources
+PUT /api/resources/text1
+DELETE /api/resources/text2
+```
+
 ## Data Structures
 ---------------------------------------------------------
 
@@ -188,34 +208,76 @@ Float is 0 100000110 001011011|000000000000000
 - Primitive: int, char, float, etc.
 - User defined: struct, union, enum, etc.
 - Abstract (ADT): User defined but abstracted, can only access via exposed functions/interface.
+ADT's are an approach to implementing data types separating interface from implementation.
 E.g. Stack ADT can be implemented via linked list or array, but interface doesn't change for the 'client'.
 Note: Opposite of abstract is concrete.
 
-### List of Structures
+### Abstract Data Types
 - Stack: Last-in-first-out list. Uses push() and pop()
 - Queue: First-in-first-out list. Uses enqueue() and dequeue(). Circular queue is a variation
 - Priority queue: Highest-priority-out list
-- Sets
-- Lists
-- Trees
-- Graphs
-- Dictionaries
+- Set: List of unique values
+- Tree: Collection of nodes and edges. If interlinked, becomes a graph
+- Map/Dictionary: Contains sets of keys each with an associated value
+
+### Typical Operations
+- Create an empty collection
+- Insert one item into collection
+- Remove one item from collection
+- Find an item in the collection
+- Check properties of collection, e.g. size
+- Drop the entire collection
+- Display the collection
+
+### Common Data Structure Operations
+|Data Structure|Time Complexity Access-Search-Insert-Delete (Average/Worst)|Space Complexity (Worst)|
+|Array|1-n-n-n/Same|n|
+|Hash Table|1-1-1-1/n-n-n-n|n|
+|Linked List|n-n-1-1/Same|n|
+|Skip List|log-log-log-log/n-n-n-n|n log n|
+|Binary Search Tree|log-log-log-log/n-n-n-n|n|
+|AVL Tree|log-log-log-log/log-log-log-log|n|
+
+[Big O Cheat Sheet](https://www.bigocheatsheet.com/)
+
+### Binary Search Tree
+- When balanced, access/search/insert/remove is all logarithmic (due to binary search)
+- Worst case is when tree is maximally unbalanced, becomes 'linked list', all cases now linear
+
+### Hash Table
+- Start with array, however stored data is related to the index via a hash.
+- This hash allows significantly faster search, insert, delete compared to a basic array
+- Worst case occurs when past its load balance. So full that collisions constantly occur, making it slightly worse than a basic array
 
 ## Algorithms
 ---------------------------------------------------------
 
 ### Common Running times in order
-- Constant
-- Logarithmic
-- Linear
-- N log N
-- Quadratic
-- Cubic
-- Exponential
+- Constant, e.g. array indexing
+- Logarithmic, e.g. binary search, where search space halves each iteration
+- Linear, e.g. travelling to the end of a linked list, must go through all elements
+- N log N, e.g. mergesort, where there are logN splits/merges and each split/merge has N operations
+- Quadratic, e.g. iterating through 2D matrix
+- Cubic, e.g. iterating through 3D matrix
+- Polynomial, includes quadratic, cubic, etc.
+- Exponential, typically avoided except for low-medium sized inputs. Intractable/NP-Complete problems.
+
+### Common Array Sorting Algorithms
+|Algorithm|Time Complexity (Best/Average/Worst)|Space Complexity (Worst)|
+|Mergesort|nlogn-nlogn-nlogn|n|
+|Quicksort|nlogn-nlogn-n^2|log|
+|Heapsort|nlogn-nlogn-nlogn|1|
+|Bubblesort/Insertionsort|n-n^2-n^2|1|
+
 [Big O Cheat Sheet](https://www.bigocheatsheet.com/)
+
+### Binary Search
+- Recursive algorithm searching for value in a sorted array
+- Logarithmic, as it halves the search space on each iteration
 
 ## Code directory
 ---------------------------------------------------------
 - deref.c: Examples of using \* and &
 - array.c: Addresses of different array creation
 - threads.c: Creates 5 threads, each printing their own id
+- speed.py: Compares speed of quadratic and linear algorithms of calculating prefix averages
