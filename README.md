@@ -115,6 +115,18 @@ git push -u origin [newbranch]
 git remote set-url origin [neworigin]
 ```
 
+### Unions
+A special data type that allows storing different data types in a single memory location.
+E.g. the below union is an 8 byte size of memory that can store a long, double, or string.
+Setting the integer to 65 and reading it as a string shows the character 'A', ASCII for 65.
+```
+union Data {
+   long integer;
+   double decimal;
+   char string[8];
+};
+```
+
 ---------------------------------------------------------
 Definitions
 ---------------------------------------------------------
@@ -234,14 +246,14 @@ Note: Opposite of abstract is concrete.
 ### Common Data Structure Operations
 |Data Structure|Time Complexity Access-Search-Insert-Delete (Average/Worst)|Space Complexity (Worst)|
 |---|---|---|
-|Array|1-n-n-n/Same|n|
-|Hash Table|1-1-1-1/n-n-n-n|n|
-|Linked List|n-n-1-1/Same|n|
-|Skip List|log-log-log-log/n-n-n-n|n log n|
-|Binary Search Tree|log-log-log-log/n-n-n-n|n|
-|AVL Tree|log-log-log-log/log-log-log-log|n|
+|Array|1 - n - n - n / 1 - n - n - n|n|
+|Hash Table|1 - 1 - 1 - 1 / n - n - n - n|n|
+|Linked List|n - n - 1 - 1 / n - n - 1 - 1|n|
+|Skip List|log - log - log - log / n - n - n - n|n log n|
+|Binary Search Tree|log - log - log - log / n - n - n - n|n|
+|AVL Tree|log - log - log - log / log - log - log - log|n|
 
-[Big O Cheat Sheet](https://www.bigocheatsheet.com/)
+[Big O Cheat Sheet](https://www.bigocheatsheet.com)
 
 ### Binary Search Tree
 - When balanced, access/search/insert/remove is all logarithmic (due to binary search)
@@ -250,8 +262,25 @@ Note: Opposite of abstract is concrete.
 ### Hash Table
 - Start with array, however stored data is related to the index via a hash.
 - This hash allows significantly faster search, insert, delete compared to a basic array
-- Worst case occurs when past its load balance. So full that collisions constantly occur, making it slightly worse than a basic array
+- Worst case if table is near full, collisions constantly occur, making it slightly worse than a basic array
+- Using primes in hash algorithm allows for a more even distribution
 
+### Hash Table Collision Management
+- Closed Addressing: On conflicts, items can be stored in separate data structures per element
+	- Separate Chaining: Allow array elements to store more than 1 item via linked list/BST/dynamic array
+- Open Addressing: All elements stored in the table
+	- Linear Probing: Try next slot until reach free slot. Deletion needs extra step
+	- Double Hashing: If collision occurs, hash again with 2nd algorithm using a different prime
+
+### Bitmap/Bit-string
+Interesting implementation for a set, where an array of bits is stored. To represent a number existing in the set, see if the bit is set at that array index, e.g. to see if the number 6 is part of the set, check the value of the bit at index 6 of the array arr[6]. This does require the array to be the size of the largest item it could store, making it inefficient for sets with few numbers and/or have a wide range. However, bitmaps have O(1) constant time access, search, insert and delete. Another benefit is that bitmaps can be easily compressed.
+
+### Taking advantage of multiple data structure
+Hash table is very popular due to its quick average operation times (in idea conditions). However, an O(1) constant search time for a specific object is different from searching for an object's attribute, e.g. the oldest item in a hash table used for caching purposes. Due to the nature of hashing, it would take O(n) linear time to search all the items to find the oldest item.
+
+By pairing with a Maximal Heap Tree, where the root node is always the oldest item, we can find the oldest item in O(1) constant time. A tree structure also allows easy insert compared to a Linked List. In the case where we could be searching for any specific item's attribute rather than the maximal/minimal, a tree structure other than heap tree can be used with a hash table to take advantage of best parts of both structures.
+
+The most frequently used data structures for one-dimensional database indexes are dynamic tree-structured indexes such as B/B+ Trees and hash-based indexes using extendible and linear hashing. - Hammer, J.; Schneider, M.
 
 ---------------------------------------------------------
 Algorithms
@@ -270,20 +299,66 @@ Algorithms
 ### Common Array Sorting Algorithms
 |Algorithm|Time Complexity (Best/Average/Worst)|Space Complexity (Worst)|
 |---|---|---|
-|Mergesort|nlogn-nlogn-nlogn|n|
-|Quicksort|nlogn-nlogn-n^2|log|
-|Heapsort|nlogn-nlogn-nlogn|1|
-|Bubblesort/Insertionsort|n-n^2-n^2|1|
+|Mergesort|n log n - n log n - n log n|n|
+|Quicksort|n log n - n log n - n^2|log|
+|Heapsort|n log n - n log n - n log n|1|
+|Bubblesort/Insertionsort|n - n^2 - n^2|1|
 
-[Big O Cheat Sheet](https://www.bigocheatsheet.com/)
+[Big O Cheat Sheet](https://www.bigocheatsheet.com)
 
 ### Binary Search
 - Recursive algorithm searching for value in a sorted array
 - Logarithmic, as it halves the search space on each iteration
 
-## Code directory
+### Binary Tree Recursive Search
+- For recursion, have a base case and left/right cases
+- Remember that only the 'correct' path is followed in recursion, so if reach the end there is no need to search the other branches.
+```
+def search(tree, key):
+	# Base case, end of path or found value
+	if tree is None or tree.val == key: 
+        return tree 
+	
+	# Go left or right depending on if current is smaller or larger
+    if tree.val < key: 
+        return search(root.right,key)
+	else:
+		return search(root.left,key) 
+```
+
+### Breadth First Search
+- Have a queue, add all elements that can be seen from the starting element to the queue
+- Visit new elements in order via dequeue, moving to the 'visited' list so its not visited twice
+- Eventually visited all nodes or found matching node
+
+### Depth First Search
+- Have a stack, add all elements that can be seen from the starting element to the stack
+- Visit new elements from last seen via pop, moving to the 'visited' list so its not visited twice
+- Since going from top of the stack, newly added nodes from current node is visited first, before moving on to earlier seen nodes
+- Eventually visited all nodes or found matching node
+
+### Depth First Search (DFS) vs Breadth First Search (BFS)
+- BFS looks at one vertex at a time. Queue based
+- DFS looks through one path at a time till the end. Stack based
+- BFS used in shortest path of un-weighted graphs, P2P networks and web crawlers
+- DFS used in shortest path of weighted graphs/minimum spanning tree, detecting cycles
+
+### Hash Table Algorithms
+Common algorithms:
+- hash1(key) = key % TABLE_SIZE
+- hash2(key) = PRIME – (key % PRIME) 
+- Double hashing: (hash1(key) + i \* hash2(key)) % TABLE_SIZE
+
+---------------------------------------------------------
+SQL
+---------------------------------------------------------
+- [Notes](https://www.notion.so/COMP3311-H11A-5d7f0991342f4be3b28bc85cb87a4584)
+
+---------------------------------------------------------
+Code Directory
 ---------------------------------------------------------
 - deref.c: Examples of using \* and &
 - array.c: Addresses of different array creation
 - threads.c: Creates 5 threads, each printing their own id
 - speed.py: Compares speed of quadratic and linear algorithms of calculating prefix averages
+- union.c: Shows use of a union data type

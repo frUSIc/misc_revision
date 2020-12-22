@@ -1,4 +1,5 @@
 #Intro
+- [Computer Networks: A Systems Approach](https://book.systemsapproach.org/index.html)
 Network sizes:
 - LAN: Within organisation or physical location
 - WAN: Geographically dispersed
@@ -183,3 +184,18 @@ Random Access protocol: CSMA
 3. Transmit frame, end if no interference
 4. If interference detected, abort transmission
 5. Choose a random delay time before retrying from step 2
+
+
+## Quick Overview of Searching Google.com/
+- URL parsing to get domain, protocol and port. Check HSTS to see if HTTP or HTTPS
+- DNS lookup to get IP address via UDP
+	- Assuming not in local cache, send ARP Request to find MAC address of router/gateway
+	- Send DNS request to gateway, gateway performs NAT (Network Address Translation)
+	- Router forwards request to ISP (Internet Service Provider)
+	- If ISP doesn't know, recusive search is performed until IP address found
+	- Router forwards response from ISP to machine
+- Open a TCP socket and requests a TCP connection. Bunch of SYN, ACKs and FIN to open the connection
+- TLS handshake, where cipher and compression is chosen, certificate is checked against CA's (Certificate Authority), Diffie-Helman and RSA used to create a signed symmetric key
+- Send the first HTTP GET request to retrieve the page, a HTTP 200 response with HTML and other data
+- HTML parsing by the browser to render the page and fetching any external resources
+- Page is loaded for the user to interact with
